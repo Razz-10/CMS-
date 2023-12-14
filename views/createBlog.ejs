@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Page</title>
+  <link rel="stylesheet" href="css/createblog.css">
+</head>
+<body>
+
+  <header>
+    <h1>Add BLog</h1>
+  </header>
+
+  <%- include("components/navbar")%>
+
+  <div class="form-container">
+    <form action="/createblog" method="post">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter title" required>
+      </div>
+
+      <div class="form-group">
+        <label for="subtitle">Subtitle:</label>
+        <input type="text" id="subtitle" name="subTitle" placeholder="Enter subtitle" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" placeholder="Enter description" rows="5" required></textarea>
+      </div>
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  <%-include('components/footer') %>
+  
+</body>
+</html>

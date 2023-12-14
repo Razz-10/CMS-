@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Single Blog Post</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-post {
+      margin-bottom: 40px;
+    }
+
+    .blog-post header {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .blog-post header h2 {
+      font-size: 28px;
+      margin: 10px 0;
+    }
+
+    .blog-post header .post-meta {
+      font-style: italic;
+      color: #888;
+    }
+
+    .blog-post .post-content {
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Single Blog Post</h1>
+    <%- include("components/navbar")%>
+  </header>
+
+  <div class="container">
+    <article class="blog-post">
+      <header>
+        <div class="Title">
+          <%- blog[0].title %>
+        </div>
+
+        <div class="Subtitle">
+          <%- blog[0].subTitle %>
+        </div>
+      </header>
+      <div class="content">
+        <!-- More paragraphs can go here -->
+        <%- blog[0].description %>
+
+      </div>
+      <div class="post-footer">
+        Published on  <%- blog[0].createdAt.toISOString().slice(0,10) %>
+      </div>
+      <button> <a href="/delete/<%- blog[0].id %>">Delete</a></button>
+      <button> <a href="/edit/<%- blog[0].id %>">Edit</a></button>
+     
+    </article>
+  </div>
+
+  <%-include('components/footer') %>
+
+</body>
+</html>

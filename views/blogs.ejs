@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Navbar & Cards</title>
+    
+    <link rel="stylesheet" href="/css/blogs.css"><style>
+    
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>CMS</h1>
+    </header>
+
+   <%- include("components/navbar")%>
+
+    <div class="card-container">
+      <% if(blogs.length == 0){%>
+      <h1>No BLogs</h1>
+      <% }else{ %> <% blogs.length > 0 && blogs.forEach((blog)=> { %>
+
+      <div class="card">
+        <h2><%- blog.title %></h2>
+        <h3><%- blog.subTitle %></h3>
+        <p><%- blog.description%></p>
+        <a href="/single/<%- blog.id %>">ReadMore</a>
+        
+      </div>
+      <%    }) %> 
+      <%    }  %>
+    </div>
+
+    <%-include('components/footer') %>
+  </body>
+</html>
