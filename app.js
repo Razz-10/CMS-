@@ -22,18 +22,18 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-app.get('/portfolio',(req,res)=>{
-    const myData = [
-        {
-            name:"raj tuladhar",
-            whoiam :"student",
-        }
-    ]
-    res.render('index.ejs',{myData})
+// app.get('/portfolio',(req,res)=>{
+//     const myData = [
+//         {
+//             name:"raj tuladhar",
+//             whoiam :"student",
+//         }
+//     ]
+//     res.render('index.ejs',{myData})
 
-})
+// })
 
-app.get('/')
+// app.get('/')
 
 
 
