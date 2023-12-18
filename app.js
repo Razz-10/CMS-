@@ -71,4 +71,7 @@ app.use("",authRoute)//localhost:3000+authRoute i.e regisetr
 app.listen(3000,()=>{
     console.log("NOdejs project has started at 3000")
 })
-//
+
+
+//to clear git cached
+//git rm -r --cached node_modules (foldername)
