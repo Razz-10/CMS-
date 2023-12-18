@@ -1,7 +1,16 @@
 const { render } = require('ejs')
 const express =require('express')
 const { blogs } = require('./model/index')
+const { renderCreateBlog, createBlog, singleBlog, rendereditBlog, deleteBlog, editBlog, allBlog } = require('./controller/blog/blog.Controller')
 const app=express()
+
+require('dotenv').config() ///requiring dotenv nd initiliazing it with default configuration
+
+
+//ROutes here
+const blogRoute =require("./routes/blogRoute")
+
+const authRoute =require("./routes/authRoute")
 
 //database connection
 require("./model/index")
@@ -22,6 +31,13 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
+
+
+app.use("",blogRoute) //local host :3000 +/createBlog ===localhost:3000/createBlog
+//app.use("/hello",blogRoute)//localhost:3000/hello+createblog===localhost:3000/hello/createblog
+
+app.use("",authRoute)//localhost:3000+authRoute i.e regisetr
+
 // app.get('/portfolio',(req,res)=>{
 //     const myData = [
 //         {
@@ -37,109 +53,20 @@ app.use(express.urlencoded({extended:true}))
 
 
 
-//all blog
-app.get('/',async (req,res)=>{
-
-    //blogs table bata sabai data ley vaneko
-    const allblogs = await blogs.findAll()
-    console.log(allblogs)
-
-        //blogs vanni ley ma allblogs ko data pass gareko ejs file lai
-    res.render('blogs',{blogs:allblogs})
-})
-
-//create blog
-app.get('/createblog',(req,res)=>{
-   
-    res.render('createBlog')
-})
+// //all blog
+//         app.get('/',allBlog)
 
 
-//create blog post
+// //singleblog page
+//         app.get("/single/:id",singleBlog)
 
-app.post('/createblog',async (req,res)=>{
-    const title =req.body.title
-    const description = req.body.description
-    const subTitle =req.body.subTitle
+//         //delete page
 
+//         app.get("/delete/:id",deleteBlog)
+// //EDIT
+//         app.get("/edit/:id",rendereditBlog)
 
-    //second approachconst {title,description,subTitle}=req.body
-
-//datbase ma halnu nikaln aparda atime lagni vayara aagadi async ra muni await halna parni hunxa
-    await blogs.create({
-        title:title,
-        description:description,
-        subTitle:subTitle,
-    })
-    res.redirect("/")
-})
-
-
-//singleblog page
-        app.get("/single/:id",async(req,res)=>{
-            
-           const id = req.params.id
-
-           //second approach garda ni hunxa
-           //const {id}=req.params
-
-           //specific mathi ko id ko data fectch garna paryo
-            const blog =await blogs.findAll({
-            where :{
-                id:id
-            }
-           })
-           //console.log(blog)
-           res.render("singleBlog",{blog:blog})
-        })
-
-
-        //delete page
-
-
-        app.get("/delete/:id",async(req,res)=>{
-            const id=req.params.id
-
-            //blogs table bata id ko delete gar vaneko jun value mathibata aayo tai value
-            await blogs.destroy({
-                where:{
-                    id:id
-                }
-            })
-            res.redirect("/")
-
-        })
-//EDIT
-        app.get("/edit/:id",async(req,res)=>{
-            const id= req.params.id
-            //find blog of that id
-          const blog= await blogs.findAll({
-                where:{
-                    id:id
-                }
-            })
-            res.render("EditBlog",{blog:blog})
-
-        })
-
-        app.post("/EditBlog/:id",async(req,res)=>{
-            const id =req.params.id
-    //console.log(req.body)
-        const title=req.body.title
-        const subtitle=req.body.subTitle
-        const description=req.body.description
-        await blogs.update({
-            title:title,
-            subTitle:subtitle,
-            description :description,
-        },{
-            where:{
-
-                id:id
-            }
-        })
-            res.redirect("/single/" +id)
-})
+//         app.post("/EditBlog/:id",editBlog)
         
 app.listen(3000,()=>{
     console.log("NOdejs project has started at 3000")
