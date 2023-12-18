@@ -71,3 +71,4 @@ app.use("",authRoute)//localhost:3000+authRoute i.e regisetr
 app.listen(3000,()=>{
     console.log("NOdejs project has started at 3000")
 })
+//
