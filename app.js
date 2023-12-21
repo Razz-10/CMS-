@@ -1,8 +1,9 @@
-const { render } = require('ejs')
-const express =require('express')
+const express = require('express')
 const { blogs } = require('./model/index')
-const { renderCreateBlog, createBlog, singleBlog, rendereditBlog, deleteBlog, editBlog, allBlog } = require('./controller/blog/blog.Controller')
+
 const app=express()
+const cookieParser =require('cookie-parser')
+const multer =require('multer')
 
 require('dotenv').config() ///requiring dotenv nd initiliazing it with default configuration
 
@@ -23,7 +24,14 @@ app.set('view engine','ejs')
 
 //nodejs lai file use garna dey vaneko
 app.use(express.static("public/"))
+app.use(express.static("uploads/"))
 app.use(express.static("hello/"))
+app.use(cookieParser())
+
+app.use((req,res,next)=>{
+     res.locals.currentUser = req.cookies.token
+    next()
+})
 
 
 //form bata data aairaxa handel gar or parse gar

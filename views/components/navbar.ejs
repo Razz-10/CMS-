@@ -1,9 +1,16 @@
 <nav>
     <ul>
+
+     <% if(currentUser){ %>
+
         <li><a href="/">Home</a></li>
-      <li><a href="/createblog">Add Blog</a></li>
+        <li><a href="/createblog">Add Blog</a></li>
+        <li><a href="/myblogs">myBlog</a></li>
+        <li><a href="/logout">Logout</a></li>
+
+     <% } else { %>
       <li><a href="/register">Regsiter</a></li>
       <li><a href="/login">Log in</a></li>
-     
+      <% } %>
     </ul>
   </nav>

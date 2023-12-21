@@ -1,4 +1,4 @@
-const { blogs } = require("../../model")
+const { blogs, users } = require("../../model")
 
 
 
@@ -6,6 +6,15 @@ exports.allBlog=async (req,res)=>{
 
     //blogs table bata sabai data ley vaneko
     const allblogs = await blogs.findAll()
+    
+   
+    // const allblogs = await blogs.findAll({
+    //     include: 
+    //         {
+    //         model:users,//USER->TableName
+    //     }
+    
+    // })
     //console.log(allblogs)
 
         //blogs vanni ley ma allblogs ko data pass gareko ejs file lai
@@ -19,9 +28,19 @@ exports.renderCreateBlog =(req,res)=>{
 
 
 exports.createBlog=async (req,res)=>{
+
+
+    const filename=req.file.filename
+    const userID=req.user[0].id
+
     const title =req.body.title
     const description = req.body.description
     const subTitle =req.body.subTitle
+
+    if(!title||!description||!subTitle||!req.file){
+        return res.send("Please Provide title,description,subTitile,file")
+    }
+    
 
 
     //second approachconst {title,description,subTitle}=req.body
@@ -31,6 +50,9 @@ exports.createBlog=async (req,res)=>{
         title:title,
         description:description,
         subTitle:subTitle,
+        userId:userID,
+        image: process.env.PROJECT_URL + filename
+        //userId:req.userID 
     })
     res.redirect("/")
 }
@@ -46,6 +68,9 @@ exports.singleBlog=async(req,res)=>{
             const blog =await blogs.findAll({
             where :{
                 id:id
+            },
+            include :{
+                model : users
             }
            })
            //console.log(blog)
@@ -94,6 +119,19 @@ exports.singleBlog=async(req,res)=>{
             }
         })
             res.redirect("/single/" +id)
-}
+
+        }
+        exports.renderMyblogs=async(req,res)=>{
+
+            //get this users blog 
+            const userId =req.userId;
+            //find blog of this userId
+            const myBlogs= await blogs.findAll({
+                where : {
+                    userId :userId
+                }
+            })
+               res.render("myBlogs.ejs",{myBlogs:myBlogs})
+           }
 
 
